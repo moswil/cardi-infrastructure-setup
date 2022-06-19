@@ -1,0 +1,29 @@
+#cloud-config
+
+# Add groups to the system
+# Adds the centos group with members 'root' and 'sys'
+# and the empty group hashicorp.
+groups:
+  - centos: [root,sys]
+  - hashicorp
+
+# Add users to the system. Users are added after groups are added.
+# ensure to change the ssh_authorized_key to the key you generated earlier
+users:
+  - default
+  - name: cardidev
+    gecos: Cardi Dev
+    shell: /bin/bash
+    primary_group: hashicorp
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3+4iqQXWm1hEKRl5TTvQfSfwuP9VNeQzZbPA1R2mP0jPyGqJyE7zPFZvKLn86986RHs2a6Pv0vG4lMrFCr1Tw+WZXwiIDFIQmraeNnpNijKdyqd1Y/e8ghchL6UHGOW3kRLpehSUCEnk7iRwcz1CrGqrut1TPeJ0DP4NcevFJ1Ju2rOIdd6+kyscCI+iUFQU9YusW/jdsvTgwnWR9m91R0hojebY2OlaCn+HzSHX2q0GgJZ89lpxa8VYjDPFKdJ7f/aZ0k79zc9XMJXWLpJzOMfhz+0KD7zx0rVGknRRoY5+S7/g71pVQa5K8hFJipC/3spTq7cV0A5LAiL81OCsLz4H8lrd20rVLxRWEedr3NynMi5fzTi+Y9yWiZH2lYaEvEIZUEPZeUZObY8k+5b1IB4i0Yo5S40FvqgQQZN6l4BVii4lux0LhuC8NyEO8hHGm73neu/wW1dYKdLBENYK+GKPH+hTsFawU756QrEGvjW0e3LTQno+O/5X7jfXlc9c= cardidev@cardisystems.com
+
+package_upgrade: true
+
+# Downloads the docker package
+packages:
+  - git
+  - curl

@@ -1,0 +1,27 @@
+#  Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# .tfvars files
+*.tfvars
+
+# .tfplan files
+*.tfplan
+
+# .pem files
+*.pem
+
+# .hcl files from Terraform v0.14 and newer
+*.hcl
+
+# .env files for global environment files
+.env
+.env.sh
+git.secrets.sh
+tf-cloud-init*
+
+# ignore ansible configuration for now
+ansible/
