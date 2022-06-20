@@ -71,8 +71,19 @@ POSTGRES_PASSWORD=CardiDev4ever
 LC_ALL=C.UTF-8
 EOF
 
-docker-compose -f docker-compose.prod.yml up -d --build
+# run the backend application
+make start_prod
+# run collect static
+make collect_static
+# run migrate prod
+make migrate_prod
+# run make migrations
+make make_migrations
+# run create user
+make create_super_user_prod
 
 cd ../$FRONTEND_REPO_DIR
 echo "REACT_APP_API_URL=http://${IP_ADDRESS}:8000" >> .env.production.local
+
+# run the frontend application
 docker-compose -f docker-compose.prod.yml up -d --build

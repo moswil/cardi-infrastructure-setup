@@ -27,3 +27,6 @@ package_upgrade: true
 packages:
   - git
   - curl
+  - lsof
+  - make
+  - bash-completion
