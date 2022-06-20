@@ -29,8 +29,8 @@ resource "digitalocean_droplet" "cardidev_node" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo \"export IP_ADDRESS=${digitalocean_droplet.cardidev_node.ipv4_address}\" >> ~/.bashrc",
-      "source /tmp/git.secrets.sh"
+      "source /tmp/git.secrets.sh",
+      "echo \"export IP_ADDRESS=${digitalocean_droplet.cardidev_node.ipv4_address}\" >> ~/.bashrc"
     ]
   }
 
