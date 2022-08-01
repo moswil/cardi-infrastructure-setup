@@ -7,4 +7,8 @@ terraform {
       version = "~> 2.0"
     }
   }
+
+  backend "s3" {
+    key = "cardi-infra/terraform/terraform.state"
+  }
 }
