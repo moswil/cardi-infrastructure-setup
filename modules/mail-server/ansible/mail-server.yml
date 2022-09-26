@@ -1,0 +1,9 @@
+---
+- hosts: mail_server
+  remote_user: shirwil
+  become: true
+
+  roles:
+    - role: common
+    - role: docker
+    - role: postal

@@ -1,0 +1,9 @@
+---
+- name: Install RabbitMQ server.
+  apt:
+    state: latest
+    name:
+      - erlang
+      - rabbitmq-server
+    update_cache: yes
+  notify: enable rabbitmq-server

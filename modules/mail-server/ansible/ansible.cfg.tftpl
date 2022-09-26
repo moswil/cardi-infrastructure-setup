@@ -1,0 +1,8 @@
+[defaults]
+inventory = ./hosts
+host_key_checking = false
+remote_user = ${sudo_user}
+private_key_file = ${path_to_private_key}
+
+[privilege_escalation]
+become = true

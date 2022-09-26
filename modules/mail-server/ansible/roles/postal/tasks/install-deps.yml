@@ -1,0 +1,25 @@
+---
+- name: Install Ruby & dependencies.
+  apt:
+    state: latest
+    name:
+      - libmysqlclient-dev
+      - nodejs
+      - ruby3.0
+    update_cache: yes
+
+- name: Install "yq" for parsing YAML in Bash.
+  pip:
+    name: yq
+
+- name: Install system wide gem dependencies.
+  command: 'bash -lc "gem install {{item}}"'
+  with_items:
+    - bundler
+    - procodile
+
+- name: Allow Ruby to bind to ports.
+  capabilities:
+    path: '/usr/bin/ruby3.0'
+    capability: 'cap_net_bind_service+ep'
+    state: present

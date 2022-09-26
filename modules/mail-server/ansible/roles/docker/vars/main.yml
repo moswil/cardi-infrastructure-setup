@@ -1,0 +1,18 @@
+---
+admin_user: '{{ admin_user }}'
+docker_required_packages:
+  - 'apt-transport-https'
+  - 'ca-certificates'
+  - 'curl'
+  - 'gnupg-agent'
+  - 'gnupg'
+  - 'software-properties-common'
+  - 'python3-pip'
+  - 'python3-setuptools'
+docker_gpg_url: https://download.docker.com/linux/ubuntu/gpg
+docker_repo: deb https://download.docker.com/linux/ubuntu jammy stable
+docker_packges:
+  - 'docker-ce'
+  - 'docker-ce-cli'
+  - 'containerd.io'
+docker_compose_url: https://github.com/docker/compose/releases/download/v2.9.0/docker-compose-linux-x86_64

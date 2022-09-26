@@ -1,0 +1,23 @@
+---
+- name: Install MariaDB Packages.
+  apt:
+    state: present
+    default_release: jammy
+    name:
+      - mariadb-client-10.6
+      - mariadb-common
+      - mariadb-server-10.6
+    update_cache: yes
+
+- name: Ensure the custom MySQL config is in place.
+  template:
+    src: etc/mysql/conf.d/postal.cnf.j2
+    dest: /etc/mysql/conf.d/postal.cnf
+  notify: restart mysql
+
+- name: Install PyMySQL
+  apt:
+    state: latest
+    name:
+      - python3-pymysql
+    update_cache: yes

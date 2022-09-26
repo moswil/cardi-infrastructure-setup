@@ -1,0 +1,60 @@
+---
+############################################################################################
+# Required changes -- be sure to change all of these to your preference
+############################################################################################
+
+# Set your timezone (follows the same format as PHP https://www.php.net/manual/en/timezones.php)
+server_timezone: 'UTC'
+
+# It is recommended to change this to a number between 10000 and 65535.
+# If you do change it, you will need to make sure to update all of your
+# commands to use your new SSH port though...
+ssh_port: '22'
+
+# Set this to your email address
+server_contact: moseswillfred1@gmail.com
+
+# Configure your system administrator user accounts
+internal_sys_admins:
+  - username: codeguru
+    name: Code Guru
+    state: present
+    groups: ['adm', 'sudo']
+    shell: '/bin/bash'
+    authorized_keys:
+      # Replace the entire quotes with the PUBLIC ssh key
+      - public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3+4iqQXWm1hEKRl5TTvQfSfwuP9VNeQzZbPA1R2mP0jPyGqJyE7zPFZvKLn86986RHs2a6Pv0vG4lMrFCr1Tw+WZXwiIDFIQmraeNnpNijKdyqd1Y/e8ghchL6UHGOW3kRLpehSUCEnk7iRwcz1CrGqrut1TPeJ0DP4NcevFJ1Ju2rOIdd6+kyscCI+iUFQU9YusW/jdsvTgwnWR9m91R0hojebY2OlaCn+HzSHX2q0GgJZ89lpxa8VYjDPFKdJ7f/aZ0k79zc9XMJXWLpJzOMfhz+0KD7zx0rVGknRRoY5+S7/g71pVQa5K8hFJipC/3spTq7cV0A5LAiL81OCsLz4H8lrd20rVLxRWEedr3NynMi5fzTi+Y9yWiZH2lYaEvEIZUEPZeUZObY8k+5b1IB4i0Yo5S40FvqgQQZN6l4BVii4lux0LhuC8NyEO8hHGm73neu/wW1dYKdLBENYK+GKPH+hTsFawU756QrEGvjW0e3LTQno+O/5X7jfXlc9c= cardidev@cardisystems.com
+
+
+  - username: moswil
+    name: Moses Wilfred
+    state: present
+    groups: ['adm', 'sudo']
+    shell: '/bin/bash'
+    authorized_keys:
+      # Replace the entire quotes with the PUBLIC ssh key
+      - public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3+4iqQXWm1hEKRl5TTvQfSfwuP9VNeQzZbPA1R2mP0jPyGqJyE7zPFZvKLn86986RHs2a6Pv0vG4lMrFCr1Tw+WZXwiIDFIQmraeNnpNijKdyqd1Y/e8ghchL6UHGOW3kRLpehSUCEnk7iRwcz1CrGqrut1TPeJ0DP4NcevFJ1Ju2rOIdd6+kyscCI+iUFQU9YusW/jdsvTgwnWR9m91R0hojebY2OlaCn+HzSHX2q0GgJZ89lpxa8VYjDPFKdJ7f/aZ0k79zc9XMJXWLpJzOMfhz+0KD7zx0rVGknRRoY5+S7/g71pVQa5K8hFJipC/3spTq7cV0A5LAiL81OCsLz4H8lrd20rVLxRWEedr3NynMi5fzTi+Y9yWiZH2lYaEvEIZUEPZeUZObY8k+5b1IB4i0Yo5S40FvqgQQZN6l4BVii4lux0LhuC8NyEO8hHGm73neu/wW1dYKdLBENYK+GKPH+hTsFawU756QrEGvjW0e3LTQno+O/5X7jfXlc9c= cardidev@cardisystems.com
+
+
+############################################################################################
+# Optional changes -- change this only if you are feeling extra nerdy
+############################################################################################
+
+# NTP configuration settings
+timedatectl_timeservers:
+  - '0.ubuntu.pool.ntp.org'
+  - '1.ubuntu.pool.ntp.org'
+  - '2.ubuntu.pool.ntp.org'
+  - '3.ubuntu.pool.ntp.org'
+
+timedatectl_timeservers_fallback:
+  - 'time-a-g.nist.gov'
+  - 'time-b-g.nist.gov'
+  - 'time-c-g.nist.gov'
+  - 'time-d-g.nist.gov'
+
+ntp_driftfile: '/var/lib/ntp/ntp.drift'
+
+# APT configuration settings
+apt_cache_expiration: 86400
+

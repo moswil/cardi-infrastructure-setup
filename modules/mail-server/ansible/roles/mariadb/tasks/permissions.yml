@@ -1,0 +1,70 @@
+---
+- name: Is root password set?
+  command: mysql -u root --execute "SELECT NOW()"
+  register: is_root_password_set
+  ignore_errors: true
+
+- name: Delete anonymous users
+  mysql_user: user=""
+    state="absent"
+  when: is_root_password_set.rc == 0
+
+- name: Set root password
+  mysql_user:
+    login_host: 'localhost'
+    login_user: 'root'
+    login_password: ''
+    user: '{{ mysql_root_username }}'
+    password: '{{mysql_root_password}}'
+    host: localhost
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    state: 'present'
+  when: is_root_password_set.rc == 0
+
+- name: Copy mysql-client authentication file and secure it
+  template:
+    src: root/my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    mode: 0600
+
+- name: Ensure root password for all root accounts
+  mysql_user:
+    name: '{{ mysql_root_username }}'
+    host: '{{ item }}'
+    password: '{{ mysql_root_password }}'
+    login_user: '{{ mysql_root_username }}'
+    login_host: 'localhost'
+    login_password: '{{ mysql_root_password }}'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  with_items:
+    - '127.0.0.1'
+    - ::1
+
+- name: Reload privilege tables
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+  changed_when: false
+
+- name: Remove anonymous users
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - DELETE FROM mysql.user WHERE User=''
+  changed_when: false
+  when: is_root_password_set.rc == 0
+
+- name: Remove test database and access to it
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - DROP DATABASE IF EXISTS test
+    - DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
+  changed_when: false
+  when: is_root_password_set.rc == 0
+
+- name: Reload privilege tables
+  command: 'mysql -ne "{{ item }}"'
+  with_items:
+    - FLUSH PRIVILEGES
+  changed_when: false
+  when: is_root_password_set.rc == 0

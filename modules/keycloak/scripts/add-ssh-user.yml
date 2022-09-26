@@ -1,0 +1,43 @@
+#cloud-config
+
+# Add groups to the system
+# Adds the centos group with members 'root' and 'sys'
+# and the empty group ${common_operations_group}.
+groups:
+  - centos: [root, sys]
+  - ${common_operations_group}
+
+# Add users to the system. Users are added after groups are added.
+# ensure to change the ssh_authorized_key to the key you generated earlier
+users:
+  - default
+  - name: ${sudo_user}
+    gecos: ${sudo_user_gecos}
+    shell: /bin/bash
+    primary_group: ${common_operations_group}
+    groups: sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ${cloud_init_ssh_key}
+  - name: root
+    groups: sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ${cloud_init_ssh_key}
+
+# specify the hostname
+fqdn: ${hostname}
+
+# update and upgrade packages
+package_update: true
+package_upgrade: true
+
+packages:
+  - bash-completion
+  - vim-enhanced
+  - git
+runcmd:
+  - mkdir -p /home/${sudo_user}/keycloak
+  - chown -hR ${sudo_user}:${common_operations_group} /home/${sudo_user}/keycloak

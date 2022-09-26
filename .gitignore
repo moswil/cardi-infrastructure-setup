@@ -22,6 +22,3 @@
 .env.sh
 git.secrets.sh
 tf-cloud-init*
-
-# ignore ansible configuration for now
-ansible/
